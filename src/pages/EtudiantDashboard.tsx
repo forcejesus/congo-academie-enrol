@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -43,26 +42,27 @@ const notifications = [
   }
 ];
 
+// Update the type of statut to match the expected union type
 const preInscriptions = [
   {
     id: 1,
     etablissement: etablissementsData[0],
     datePreInscription: "2023-05-05T11:20:00",
-    statut: "Acceptée",
+    statut: "Acceptée" as "Acceptée" | "En attente" | "Refusée",
     filiere: "Sciences Économiques"
   },
   {
     id: 2,
     etablissement: etablissementsData[1],
     datePreInscription: "2023-05-03T09:45:00",
-    statut: "En attente",
+    statut: "En attente" as "Acceptée" | "En attente" | "Refusée",
     filiere: "Management des Organisations"
   },
   {
     id: 3,
     etablissement: etablissementsData[4],
     datePreInscription: "2023-04-28T15:30:00",
-    statut: "Refusée",
+    statut: "Refusée" as "Acceptée" | "En attente" | "Refusée",
     filiere: "Soins Infirmiers"
   }
 ];

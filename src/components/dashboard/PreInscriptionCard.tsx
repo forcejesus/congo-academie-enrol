@@ -21,12 +21,15 @@ interface Etablissement {
   logo?: string;
 }
 
+// Define the statut type as a union of literal strings
+type StatutType = "En attente" | "Acceptée" | "Refusée";
+
 interface PreInscriptionCardProps {
   preInscription: {
     id: number;
     etablissement: Etablissement;
     datePreInscription: string;
-    statut: "En attente" | "Acceptée" | "Refusée";
+    statut: StatutType;
     filiere: string;
   };
 }
@@ -34,7 +37,7 @@ interface PreInscriptionCardProps {
 export const PreInscriptionCard = ({ preInscription }: PreInscriptionCardProps) => {
   const navigate = useNavigate();
   
-  const getBadgeVariant = (statut: string) => {
+  const getBadgeVariant = (statut: StatutType) => {
     switch (statut) {
       case 'Acceptée':
         return <Badge className="bg-green-500">Acceptée</Badge>;
