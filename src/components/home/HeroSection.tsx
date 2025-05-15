@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, UserPlus, List } from 'lucide-react';
+import { ArrowRight, UserPlus, List, School, ChevronDown } from 'lucide-react';
 import gsap from 'gsap';
 
 const HeroSection = () => {
@@ -10,13 +10,15 @@ const HeroSection = () => {
   const bannerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const banner = bannerRef.current;
     const content = contentRef.current;
     const image = imageRef.current;
+    const stats = statsRef.current;
     
-    if (banner && content && image) {
+    if (banner && content && image && stats) {
       const tl = gsap.timeline();
       
       // Initial setup
@@ -28,6 +30,11 @@ const HeroSection = () => {
       gsap.set(image, { 
         x: 100, 
         opacity: 0 
+      });
+      
+      gsap.set(stats, {
+        y: 30,
+        opacity: 0
       });
       
       // Animation sequence
@@ -48,9 +55,22 @@ const HeroSection = () => {
         opacity: 1, 
         duration: 1,
         ease: "power2.out" 
-      }, "-=0.5");
+      }, "-=0.5")
+      .to(stats, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out"
+      }, "-=0.3");
     }
   }, []);
+  
+  const scrollToFeatures = () => {
+    const featuresSection = document.getElementById('fonctionnalites');
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   
   return (
     <section className="relative w-full overflow-hidden">
@@ -105,20 +125,51 @@ const HeroSection = () => {
                 variant="outline" 
                 size="lg"
                 className="border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 gap-2 h-14 px-8 rounded-md transition-all duration-300"
-                onClick={() => navigate('/etablissements')}
+                onClick={() => navigate('/inscription/etablissement')}
               >
-                <List size={20} />
-                <span>Voir les établissements</span>
+                <School size={20} />
+                <span>Espace établissements</span>
               </Button>
             </div>
             
-            <div className="flex items-center gap-1 text-sm text-white/80 pt-2">
-              <div className="flex items-center justify-center h-6 w-6 rounded-full bg-congo-green/20 backdrop-blur-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-congo-yellow" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
+            <div className="flex items-center gap-3 pt-2">
+              <div className="flex items-center gap-1 text-sm text-white/80">
+                <div className="flex items-center justify-center h-6 w-6 rounded-full bg-congo-green/20 backdrop-blur-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-congo-yellow" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span>Service du Ministère</span>
               </div>
-              <span>Service du Ministère de l'Enseignement Supérieur</span>
+              
+              <div className="flex items-center gap-1 text-sm text-white/80">
+                <div className="flex items-center justify-center h-6 w-6 rounded-full bg-congo-green/20 backdrop-blur-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-congo-yellow" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span>Plateforme sécurisée</span>
+              </div>
+              
+              <div className="flex items-center gap-1 text-sm text-white/80">
+                <div className="flex items-center justify-center h-6 w-6 rounded-full bg-congo-green/20 backdrop-blur-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-congo-yellow" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span>Suivi en temps réel</span>
+              </div>
+            </div>
+            
+            {/* Scroll down indicator */}
+            <div className="pt-8 hidden md:block">
+              <button 
+                onClick={scrollToFeatures}
+                className="flex flex-col items-center text-white/70 hover:text-white transition-colors"
+              >
+                <span className="text-sm mb-2">Découvrir nos services</span>
+                <ChevronDown size={20} className="animate-bounce" />
+              </button>
             </div>
           </div>
           
@@ -141,6 +192,29 @@ const HeroSection = () => {
                 <span className="text-sm font-medium text-white">Plateforme Officielle</span>
               </div>
             </div>
+          </div>
+        </div>
+        
+        {/* Stats Section */}
+        <div 
+          ref={statsRef} 
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto"
+        >
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20">
+            <div className="text-congo-yellow text-3xl font-bold">53+</div>
+            <div className="text-white text-sm">Établissements Agréés</div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20">
+            <div className="text-congo-yellow text-3xl font-bold">15K+</div>
+            <div className="text-white text-sm">Étudiants Inscrits</div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20">
+            <div className="text-congo-yellow text-3xl font-bold">97%</div>
+            <div className="text-white text-sm">Taux de Satisfaction</div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20">
+            <div className="text-congo-yellow text-3xl font-bold">120+</div>
+            <div className="text-white text-sm">Filières Disponibles</div>
           </div>
         </div>
       </div>

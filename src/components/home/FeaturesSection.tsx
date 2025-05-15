@@ -1,6 +1,9 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
+import { Check } from 'lucide-react';
 
 const features = [
   {
@@ -10,7 +13,13 @@ const features = [
       </svg>
     ),
     title: "Liste des établissements agréés",
-    description: "Consultez la liste officielle des établissements privés reconnus par le Ministère de l'Enseignement Supérieur."
+    description: "Consultez la liste officielle des établissements privés reconnus par le Ministère de l'Enseignement Supérieur.",
+    details: [
+      "Fiches détaillées de chaque établissement",
+      "Informations sur l'agrément ministériel",
+      "Coordonnées et emplacements vérifiés",
+      "Photos des campus et installations"
+    ]
   },
   {
     icon: (
@@ -21,7 +30,13 @@ const features = [
       </svg>
     ),
     title: "Pré-inscription en ligne",
-    description: "Soumettez votre demande d'inscription dans les établissements de votre choix sans déplacement."
+    description: "Soumettez votre demande d'inscription dans les établissements de votre choix sans déplacement.",
+    details: [
+      "Formulaire d'inscription simplifié",
+      "Téléchargement de documents en ligne",
+      "Choix multiple d'établissements",
+      "Suivi en temps réel de votre candidature"
+    ]
   },
   {
     icon: (
@@ -35,7 +50,13 @@ const features = [
       </svg>
     ),
     title: "Portail établissements",
-    description: "Espace dédié aux établissements pour gérer efficacement les inscriptions et les données administratives."
+    description: "Espace dédié aux établissements pour gérer efficacement les inscriptions et les données administratives.",
+    details: [
+      "Tableau de bord complet",
+      "Gestion des demandes d'inscription",
+      "Communication directe avec les candidats",
+      "Rapports et statistiques d'admission"
+    ]
   },
   {
     icon: (
@@ -44,7 +65,13 @@ const features = [
       </svg>
     ),
     title: "Suivi de dossier",
-    description: "Suivez l'état de votre demande d'inscription et recevez des notifications d'avancement en temps réel."
+    description: "Suivez l'état de votre demande d'inscription et recevez des notifications d'avancement en temps réel.",
+    details: [
+      "Notifications par email et SMS",
+      "Historique des actions et modifications",
+      "État détaillé du traitement administratif",
+      "Rappels automatiques pour les documents manquants"
+    ]
   },
   {
     icon: (
@@ -53,7 +80,13 @@ const features = [
       </svg>
     ),
     title: "Vérification des agréments",
-    description: "Consultez la liste des filières autorisées et vérifiez le statut d'agrément de chaque établissement."
+    description: "Consultez la liste des filières autorisées et vérifiez le statut d'agrément de chaque établissement.",
+    details: [
+      "Base de données ministérielle officielle",
+      "Information sur la validité des diplômes",
+      "Liste des cycles de formation reconnus",
+      "Historique des renouvellements d'agrément"
+    ]
   },
   {
     icon: (
@@ -62,47 +95,111 @@ const features = [
       </svg>
     ),
     title: "Système d'exportation",
-    description: "Exportation facile et sécurisée des données d'inscription au format Excel pour les établissements."
+    description: "Exportation facile et sécurisée des données d'inscription au format Excel pour les établissements.",
+    details: [
+      "Génération de rapports personnalisés",
+      "Export des statistiques d'admission",
+      "Données conformes aux exigences ministérielles",
+      "Archivage automatique des documents"
+    ]
   }
 ];
 
 const FeaturesSection = () => {
+  // Animation variants for staggered animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+  
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 50
+      }
+    }
+  };
+
   return (
-    <section className="py-20 bg-gray-50 relative">
+    <section className="py-20 bg-gray-50 relative" id="fonctionnalites">
       {/* Background decorative elements */}
       <div className="absolute bottom-0 right-0 w-64 h-64 bg-congo-green/5 rounded-full blur-3xl"></div>
       <div className="absolute top-20 left-20 w-96 h-96 bg-congo-yellow/5 rounded-full blur-3xl"></div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
+          <Badge variant="outline" className="bg-congo-green/5 text-congo-green border-congo-green/20 mb-4 px-4 py-1.5">
+            Transformation digitale
+          </Badge>
           <h2 className="text-3xl font-bold mb-6 relative inline-block">
             <span className="relative z-10">Fonctionnalités de la plateforme</span>
             <span className="absolute bottom-1 left-0 w-full h-3 bg-congo-yellow/20 -z-10"></span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Découvrez les outils modernes mis à votre disposition pour simplifier le processus d'inscription 
-            dans l'enseignement supérieur.
+            dans l'enseignement supérieur et assurer la transparence administrative.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-animation">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
           {features.map((feature, index) => (
-            <Card 
-              key={index} 
-              className="bg-white border border-gray-100 hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
-            >
-              <div className="absolute -right-16 -top-16 h-40 w-40 bg-congo-green/5 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
-              <CardHeader className="pb-0">
-                <div className="mb-5 p-3 rounded-xl inline-block bg-congo-green/5 text-congo-green group-hover:bg-congo-green group-hover:text-white transition-colors duration-300">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold mb-2 text-gray-800">{feature.title}</h3>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">{feature.description}</p>
-              </CardContent>
-            </Card>
+            <motion.div key={index} variants={itemVariants}>
+              <Card 
+                className="bg-white border border-gray-100 hover:shadow-lg transition-shadow duration-300 overflow-hidden group h-full flex flex-col"
+              >
+                <div className="absolute -right-16 -top-16 h-40 w-40 bg-congo-green/5 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                <CardHeader className="pb-0">
+                  <div className="mb-5 p-3 rounded-xl inline-block bg-congo-green/5 text-congo-green group-hover:bg-congo-green group-hover:text-white transition-colors duration-300">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-gray-800">{feature.title}</h3>
+                </CardHeader>
+                <CardContent className="flex-grow flex flex-col">
+                  <p className="text-gray-600 mb-4">{feature.description}</p>
+                  
+                  {/* Feature details */}
+                  <div className="mt-auto">
+                    <ul className="space-y-2">
+                      {feature.details.map((detail, idx) => (
+                        <li key={idx} className="flex items-start">
+                          <span className="mr-2 mt-1 flex-shrink-0 text-congo-green">
+                            <Check size={16} />
+                          </span>
+                          <span className="text-sm text-gray-600">{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
+        </motion.div>
+        
+        <div className="mt-16 text-center">
+          <div className="inline-block p-6 rounded-lg bg-white shadow-md border border-gray-100">
+            <h3 className="text-xl font-bold mb-3 text-congo-green">Des outils innovants au service de l'éducation</h3>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Notre plateforme est conçue pour faciliter l'accès à l'enseignement supérieur tout en garantissant 
+              la qualité et la légitimité des établissements partenaires. Un service complet du Ministère 
+              de l'Enseignement Supérieur pour le développement académique du Congo.
+            </p>
+          </div>
         </div>
       </div>
     </section>
