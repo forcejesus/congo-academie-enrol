@@ -11,6 +11,9 @@ import ConnexionEtudiant from "./pages/ConnexionEtudiant";
 import ConnexionEtablissement from "./pages/ConnexionEtablissement";
 import InscriptionEtudiant from "./pages/InscriptionEtudiant";
 import InscriptionEtablissement from "./pages/InscriptionEtablissement";
+import EtablissementDetail from "./pages/EtablissementDetail";
+import PreInscriptionRecu from "./pages/PreInscriptionRecu";
+import EtudiantDashboard from "./pages/EtudiantDashboard";
 
 const queryClient = new QueryClient();
 
@@ -23,10 +26,13 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/etablissements" element={<Etablissements />} />
+          <Route path="/etablissements/:id" element={<EtablissementDetail />} />
           <Route path="/connexion/etudiant" element={<ConnexionEtudiant />} />
           <Route path="/connexion/etablissement" element={<ConnexionEtablissement />} />
           <Route path="/inscription/etudiant" element={<InscriptionEtudiant />} />
           <Route path="/inscription/etablissement" element={<InscriptionEtablissement />} />
+          <Route path="/etudiant/dashboard" element={<EtudiantDashboard />} />
+          <Route path="/etudiant/preinscriptions/:id/recu" element={<PreInscriptionRecu />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
