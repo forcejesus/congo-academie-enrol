@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { FileText, Download, BookOpen, Calendar, Bell, Clock, User, School } from "lucide-react";
+import { FileText, Download, BookOpen, Calendar, Bell, Clock, User, School, MapPin } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import { etablissementsData } from '@/data/etablissements';
 
