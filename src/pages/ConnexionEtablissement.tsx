@@ -9,11 +9,11 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { LogIn, Book } from "lucide-react";
+import { LogIn, School } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
-  code: z.string().min(3, "Veuillez entrer un code d'établissement valide"),
+  email: z.string().email("Veuillez entrer un email valide"),
   password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères"),
 });
 
@@ -24,7 +24,7 @@ const ConnexionEtablissement = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      code: "",
+      email: "",
       password: "",
     },
   });
@@ -33,9 +33,11 @@ const ConnexionEtablissement = () => {
     // This would connect to a backend in a real implementation
     console.log(values);
     toast({
-      title: "Connexion en cours",
-      description: "Cette fonctionnalité sera disponible prochainement.",
+      title: "Connexion réussie",
+      description: "Vous êtes maintenant connecté à votre portail d'établissement.",
     });
+    // Redirect to school dashboard
+    navigate('/etablissement/dashboard');
   };
 
   return (
@@ -43,10 +45,10 @@ const ConnexionEtablissement = () => {
       <div className="container mx-auto px-4 py-12 max-w-md">
         <Card className="w-full shadow-lg border-congo-green/20">
           <CardHeader className="space-y-1 text-center">
-            <Book className="mx-auto h-12 w-12 text-congo-green mb-2" />
-            <CardTitle className="text-2xl font-bold text-congo-green">Portail Établissements</CardTitle>
+            <School className="mx-auto h-12 w-12 text-congo-green mb-2" />
+            <CardTitle className="text-2xl font-bold text-congo-green">Espace Établissement</CardTitle>
             <CardDescription>
-              Accès réservé aux établissements d'enseignement supérieur agréés
+              Connectez-vous à votre portail d'établissement
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -54,12 +56,12 @@ const ConnexionEtablissement = () => {
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField
                   control={form.control}
-                  name="code"
+                  name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Code Établissement</FormLabel>
+                      <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="Entrez votre code d'établissement" {...field} />
+                        <Input placeholder="votre.email@etablissement.com" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -79,7 +81,7 @@ const ConnexionEtablissement = () => {
                   )}
                 />
                 <Button type="submit" className="w-full bg-congo-green hover:bg-congo-green/90">
-                  <LogIn className="mr-2 h-4 w-4" /> Accéder au portail
+                  <LogIn className="mr-2 h-4 w-4" /> Se connecter
                 </Button>
               </form>
             </Form>
@@ -87,11 +89,11 @@ const ConnexionEtablissement = () => {
           <CardFooter className="flex flex-col space-y-4 pt-0">
             <div className="text-sm text-center text-gray-500">
               <a href="#" className="text-congo-green hover:underline">
-                Identifiants perdus ?
+                Mot de passe oublié ?
               </a>
             </div>
             <div className="text-sm text-center">
-              Demander un accès ? {" "}
+              Pas encore de compte ? {" "}
               <a 
                 href="/inscription/etablissement" 
                 className="text-congo-green font-semibold hover:underline"
@@ -100,7 +102,7 @@ const ConnexionEtablissement = () => {
                   navigate('/inscription/etablissement');
                 }}
               >
-                Contacter le ministère
+                S'inscrire
               </a>
             </div>
           </CardFooter>

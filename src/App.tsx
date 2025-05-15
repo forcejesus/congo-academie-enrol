@@ -14,6 +14,7 @@ import InscriptionEtablissement from "./pages/InscriptionEtablissement";
 import EtablissementDetail from "./pages/EtablissementDetail";
 import PreInscriptionRecu from "./pages/PreInscriptionRecu";
 import EtudiantDashboard from "./pages/EtudiantDashboard";
+import EspaceEtablissement from "./pages/EspaceEtablissement";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/inscription/etudiant" element={<InscriptionEtudiant />} />
           <Route path="/inscription/etablissement" element={<InscriptionEtablissement />} />
           <Route path="/etudiant/dashboard" element={<EtudiantDashboard />} />
+          <Route path="/etablissement/dashboard" element={<EspaceEtablissement />} />
           <Route path="/etudiant/preinscriptions/:id/recu" element={<PreInscriptionRecu />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

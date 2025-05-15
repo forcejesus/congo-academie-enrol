@@ -10,12 +10,13 @@ import { useToast } from "@/components/ui/use-toast";
 
 // Dashboard Components
 import { DashboardMetricCard } from '@/components/dashboard/DashboardMetricCard';
-import { PreInscriptionsSection } from '@/components/dashboard/PreInscriptionsSection';
 import { DocumentsSection } from '@/components/dashboard/DocumentsSection';
 import { NotificationsSection } from '@/components/dashboard/NotificationsSection';
 import { EventsSection } from '@/components/dashboard/EventsSection';
 import { RecommendedSchoolsSection } from '@/components/dashboard/RecommendedSchoolsSection';
-import { ProfileCard } from '@/components/dashboard/ProfileCard';
+import { EtudiantInfosCard } from '@/components/dashboard/EtudiantInfos';
+import { PreInscriptionCard } from '@/components/dashboard/PreInscriptionCard';
+import { NewPreInscriptionCard } from '@/components/dashboard/NewPreInscriptionCard';
 
 // Mock Data
 const notifications = [
@@ -111,10 +112,26 @@ const prochainEvenements = [
   }
 ];
 
+const etudiantInfo = {
+  nom: "Dupont",
+  prenom: "Jean",
+  email: "jean.dupont@email.com",
+  telephone: "+242 06 987 65 43",
+  niveauEtude: "Terminale A - Baccalauréat obtenu",
+  photo: undefined  // Replace with actual photo URL if needed
+};
+
 const EtudiantDashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
+  const handleEditProfile = () => {
+    toast({
+      title: "Modifier le profil",
+      description: "Cette fonctionnalité sera disponible prochainement."
+    });
+  };
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8">
@@ -152,19 +169,40 @@ const EtudiantDashboard = () => {
           />
         </div>
         
-        <Tabs defaultValue="preinscriptions" className="mb-6">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
-            <TabsTrigger value="preinscriptions">
-              <BookOpen className="mr-2 h-4 w-4 hidden sm:inline" />
-              Pré-inscriptions
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <div className="lg:col-span-3">
+            <EtudiantInfosCard 
+              etudiant={etudiantInfo}
+              onEdit={handleEditProfile}
+            />
+          </div>
+        </div>
+        
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-4 flex items-center">
+            <School className="mr-2 h-5 w-5 text-congo-green" />
+            Mes pré-inscriptions
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {preInscriptions.map((preinscription) => (
+              <PreInscriptionCard 
+                key={preinscription.id}
+                preInscription={preinscription}
+              />
+            ))}
+            <NewPreInscriptionCard />
+          </div>
+        </div>
+        
+        <Tabs defaultValue="notifications" className="mb-6">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="notifications">
+              <Bell className="mr-2 h-4 w-4 hidden sm:inline" />
+              Notifications
             </TabsTrigger>
             <TabsTrigger value="documents">
               <FileText className="mr-2 h-4 w-4 hidden sm:inline" />
               Documents
-            </TabsTrigger>
-            <TabsTrigger value="notifications">
-              <Bell className="mr-2 h-4 w-4 hidden sm:inline" />
-              Notifications
             </TabsTrigger>
             <TabsTrigger value="evenements">
               <Calendar className="mr-2 h-4 w-4 hidden sm:inline" />
@@ -172,16 +210,12 @@ const EtudiantDashboard = () => {
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="preinscriptions">
-            <PreInscriptionsSection preInscriptions={preInscriptions} />
+          <TabsContent value="notifications">
+            <NotificationsSection notifications={notifications} />
           </TabsContent>
           
           <TabsContent value="documents">
             <DocumentsSection documents={documents} />
-          </TabsContent>
-          
-          <TabsContent value="notifications">
-            <NotificationsSection notifications={notifications} />
           </TabsContent>
           
           <TabsContent value="evenements">
@@ -189,9 +223,8 @@ const EtudiantDashboard = () => {
           </TabsContent>
         </Tabs>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mt-8">
           <RecommendedSchoolsSection etablissements={etablissementsData} />
-          <ProfileCard />
         </div>
       </div>
     </Layout>

@@ -33,9 +33,11 @@ const ConnexionEtudiant = () => {
     // This would connect to a backend in a real implementation
     console.log(values);
     toast({
-      title: "Connexion en cours",
-      description: "Cette fonctionnalité sera disponible prochainement.",
+      title: "Connexion réussie",
+      description: "Vous êtes maintenant connecté à votre espace étudiant.",
     });
+    // Redirect to student dashboard
+    navigate('/etudiant/dashboard');
   };
 
   return (
